@@ -1,7 +1,7 @@
 # 🎬 AutoStream AI Sales Agent
 
 > A conversational AI agent for **AutoStream** — an automated video editing SaaS for content creators.
-> Built with **LangGraph + Claude 3 Haiku**, featuring RAG-powered knowledge retrieval, intent detection, and automated lead capture.
+> Built with **LangGraph + OpenAI GPT (gpt-5.4-mini)**, featuring RAG-powered knowledge retrieval, intent detection, and automated lead capture.
 
 ---
 
@@ -9,15 +9,13 @@
 
 ```
 autostream-agent/
-├── agent.py                    # Main LangGraph agent & CLI entrypoint
-├── requirements.txt            # Python dependencies
+├── agent.py # Main LangGraph agent & CLI entrypoint
+├── requirements.txt # Python dependencies
 ├── knowledge_base/
-│   └── autostream_kb.json      # Local knowledge base (pricing, policies, FAQs)
+│ └── autostream_kb.json # Local knowledge base (pricing, policies, FAQs)
 └── utils/
-    ├── rag.py                  # TF-IDF based RAG retrieval pipeline
-    └── tools.py                # Lead capture tool (mock API function)
-```
-
+├── rag.py # TF-IDF based RAG retrieval pipeline
+└── tools.py # Lead capture tool (mock API function)
 ---
 
 ## 🚀 How to Run Locally
@@ -25,7 +23,7 @@ autostream-agent/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/autostream-agent.git
+git clone https://github.com/kotagiri-kulbhushan/autostream-agent.git
 cd autostream-agent
 ```
 
@@ -45,14 +43,12 @@ pip install -r requirements.txt
 
 ### 4. Set Your API Key
 
-The agent uses **Claude 3 Haiku** via the Anthropic API.
+The agent uses OpenAI GPT models.
 
-```bash
-export ANTHROPIC_API_KEY=your_api_key_here    # macOS / Linux
-set ANTHROPIC_API_KEY=your_api_key_here       # Windows CMD
-```
+export OPENAI_API_KEY=your_api_key_here    # macOS / Linux
+set OPENAI_API_KEY=your_api_key_here       # Windows CMD
 
-> Get your free API key at [console.anthropic.com](https://console.anthropic.com)
+Get your API key at https://platform.openai.com
 
 ### 5. Run the Agent
 
@@ -179,15 +175,15 @@ FastAPI / Flask Backend  ←──── your server
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Language | Python 3.9+ |
-| Agent Framework | LangGraph 0.2+ |
-| LLM | Claude 3 Haiku (Anthropic) |
-| RAG | TF-IDF (no external vector DB) |
-| State | LangGraph `StateGraph` + TypedDict |
-| Tool | LangChain `StructuredTool` |
-| Knowledge Base | Local JSON file |
+| Layer            | Technology                                  |
+|------------------|----------------------------------------------|
+| Language         | Python 3.9+                                  |
+| Agent Framework  | LangGraph 0.2+                               |
+| LLM              | OpenAI GPT (gpt-5.4-mini)                    |
+| RAG              | TF-IDF (no external vector DB)               |
+| State            | LangGraph StateGraph + TypedDict             |
+| Tool             | LangChain StructuredTool                     |
+| Knowledge Base   | Local JSON file                              |
 
 ---
 
