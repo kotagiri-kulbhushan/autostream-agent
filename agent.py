@@ -1,18 +1,8 @@
-"""
-agent.py – AutoStream Conversational AI Agent
-Built with LangGraph + Claude 3 Haiku (Anthropic)
-
-Graph topology
-──────────────
-  [START] → chat_node → (route) ─┬─ "tool"  → tool_node → chat_node
-                                  └─ "end"   → [END]
-"""
-
 import os
 import json
 from typing import Annotated, TypedDict
 
-from langchain_anthropic import ChatAnthropic
+from langchain_openai import ChatOpenAI
 from langchain_core.messages import (
     AIMessage,
     BaseMessage,
@@ -26,6 +16,8 @@ from langgraph.graph.message import add_messages
 from utils.rag import retrieve, get_full_context
 from utils.tools import lead_capture_tool
 
+from dotenv import load_dotenv
+load_dotenv()
 
 # ─────────────────────────────────────────────
 # State definition
@@ -80,20 +72,25 @@ def build_system_prompt(query: str, lead_info: dict) -> str:
 # ─────────────────────────────────────────────
 
 def get_llm():
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    import os
+    from dotenv import load_dotenv
+    load_dotenv()
+
+    api_key = os.environ.get("OPENAI_API_KEY")
+
     if not api_key:
         raise EnvironmentError(
-            "ANTHROPIC_API_KEY is not set. "
-            "Export it with: export ANTHROPIC_API_KEY=your_key_here"
+            "OPENAI_API_KEY is not set. Check your .env file."
         )
-    llm = ChatAnthropic(
-        model="claude-haiku-4-5",
+
+    llm = ChatOpenAI(
+        model="gpt-5.4-mini",   # fast + cheap
         api_key=api_key,
         temperature=0.3,
         max_tokens=1024,
     )
-    return llm.bind_tools([lead_capture_tool])
 
+    return llm.bind_tools([lead_capture_tool])
 
 # ─────────────────────────────────────────────
 # Graph nodes
